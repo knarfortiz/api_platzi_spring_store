@@ -1,0 +1,31 @@
+package com.platzi.store.persistence;
+
+import com.platzi.store.persistence.crud.ProductoCrudRepository;
+import com.platzi.store.persistence.entity.Producto;
+
+import java.util.List;
+import java.util.Optional;
+
+public class ProductoRepository {
+    private final ProductoCrudRepository productoCrudRepository;
+
+    public ProductoRepository(ProductoCrudRepository productoCrudRepository) {
+        this.productoCrudRepository = productoCrudRepository;
+    }
+
+    public List<Producto> getAll() {
+        return (List<Producto>) productoCrudRepository.findAll();
+    }
+
+    public List<Producto> getByCategoria(int idCategoria) {
+        return productoCrudRepository.findByIdCategoria(idCategoria);
+    }
+
+    public List<Producto> getByCategoriaOrderByName(int idCategoria) {
+        return productoCrudRepository.findByIdCategoriaOrderByNombreAsc(idCategoria);
+    }
+
+    public Optional<List<Producto>> getEscasos(int cantidadStock) {
+        return productoCrudRepository.findByIdCantidadStockLessThanAndEstado(cantidadStock, true);
+    }
+}
