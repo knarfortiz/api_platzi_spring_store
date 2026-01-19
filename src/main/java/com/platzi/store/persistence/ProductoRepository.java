@@ -13,7 +13,6 @@ import java.util.Optional;
 
 @Repository
 public class ProductoRepository implements ProductRepository {
-    @Autowired
     private final ProductoCrudRepository productoCrudRepository;
     private final ProductMapper mapper;
 
