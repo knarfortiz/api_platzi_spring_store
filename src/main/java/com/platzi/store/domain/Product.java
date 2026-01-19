@@ -1,15 +1,15 @@
 package com.platzi.store.domain;
 
 public class Product {
-    private int productId;
+    private Integer productId;
     private String name;
-    private int categoryId;
+    private Integer categoryId;
     private double price;
     private int stock;
     private boolean active;
     private Category category;
 
-    public int getProductId() {
+    public Integer getProductId() {
         return productId;
     }
 
@@ -25,7 +25,7 @@ public class Product {
         this.name = name;
     }
 
-    public int getCategoryId() {
+    public Integer getCategoryId() {
         return categoryId;
     }
 

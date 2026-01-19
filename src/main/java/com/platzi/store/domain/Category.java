@@ -1,11 +1,11 @@
 package com.platzi.store.domain;
 
 public class Category {
-    private int categoryId;
+    private Integer categoryId;
     private String category;
     private boolean active;
 
-    public int getCategoryId() {
+    public Integer getCategoryId() {
         return categoryId;
     }
 
