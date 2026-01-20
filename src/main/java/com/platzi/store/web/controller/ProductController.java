@@ -2,10 +2,11 @@ package com.platzi.store.web.controller;
 
 import com.platzi.store.domain.Product;
 import com.platzi.store.domain.service.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
@@ -17,27 +18,29 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public List<Product> getAllProducts() {
-        return productService.getAll();
+    public ResponseEntity<List<Product>> getAllProducts() {
+        return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Optional<Product> getProduct(@PathVariable("id") int productId) {
-        return productService.getProduct(productId);
+    public ResponseEntity<Product> getProduct(@PathVariable("id") int productId) {
+        return productService.getProduct(productId).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/category/{id}")
-    public Optional<List<Product>> getProductsByCategory(@PathVariable("id") int categoryId) {
-        return productService.getProductsByCategory(categoryId);
+    public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable("id") int categoryId) {
+        return productService.getProductsByCategory(categoryId).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/save")
-    public Product saveProduct(@RequestBody Product product) {
-        return productService.save(product);
+    public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
+        return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteProduct(@PathVariable("id") int productId) {
-        return productService.delete(productId);
+    public ResponseEntity<Void> deleteProduct(@PathVariable("id") int productId) {
+        return productService.delete(productId)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
     }
 }
